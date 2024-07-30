@@ -1,5 +1,6 @@
 package org.scaler.my_blog.controller;
 
+import org.scaler.my_blog.entity.Post;
 import org.scaler.my_blog.payload.PostDTO;
 import org.scaler.my_blog.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,23 @@ public class PostController {
     @GetMapping
     public List<PostDTO> getAllPosts(){
         return postService.getAllPosts();
+    }
+    //get post by id
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable(name = "id") long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
+    }
+    //update the post
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO,@PathVariable(name="id")long id) {
+
+     PostDTO postResponse =   postService.updatePost(postDTO,id);
+     return new ResponseEntity<>(postResponse,HttpStatus.OK);
+    }
+    //delete post restapi
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deletePost(@PathVariable(name="id")long id){
+             postService.deletePost(id);
+             return new ResponseEntity<>("post id deleted successfully",HttpStatus.OK);
     }
 }

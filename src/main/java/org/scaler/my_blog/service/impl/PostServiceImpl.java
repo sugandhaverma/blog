@@ -1,6 +1,7 @@
 package org.scaler.my_blog.service.impl;
 
 import org.scaler.my_blog.entity.Post;
+import org.scaler.my_blog.exception.ResourceNotFoundException;
 import org.scaler.my_blog.payload.PostDTO;
 import org.scaler.my_blog.repository.PostRepository;
 import org.scaler.my_blog.service.PostService;
@@ -43,6 +44,32 @@ public class PostServiceImpl implements PostService {
     List<Post> posts = postRepository.findAll();
       return  posts.stream().map(post ->mapToDTO(post)).collect(Collectors.toList());
     }
+
+    @Override
+    public PostDTO getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(()->new  ResourceNotFoundException("Post","id",id));
+        return mapToDTO(post);
+    }
+
+    @Override
+    public PostDTO updatePost(PostDTO postDTO, Long id) {
+        //get post by id from database
+        Post post = postRepository.findById(id).orElseThrow(()->new  ResourceNotFoundException("Post","id",id));
+
+       post.setTitle(postDTO.getTitle());
+       post.setDescription(postDTO.getDescription());
+       post.setContent(postDTO.getContent());
+
+       Post updatedPost = postRepository.save(post);
+        return mapToDTO(updatedPost);
+    }
+
+    @Override
+    public void deletePost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(()->new  ResourceNotFoundException("Post","id",id));
+   postRepository.delete(post);
+    }
+
     //converted entity into DTO
     private PostDTO mapToDTO(Post post){
         PostDTO postdto = new PostDTO();
