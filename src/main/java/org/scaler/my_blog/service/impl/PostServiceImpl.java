@@ -77,6 +77,8 @@ public class PostServiceImpl implements PostService {
        post.setTitle(postDTO.getTitle());
        post.setDescription(postDTO.getDescription());
        post.setContent(postDTO.getContent());
+       post.setMediaUrl(postDTO.getMediaUrl());
+       post.setMediaType(postDTO.getMediaType());
 
        Post updatedPost = postRepository.save(post);
         return mapToDTO(updatedPost);
@@ -95,6 +97,8 @@ public class PostServiceImpl implements PostService {
         postdto.setId(post.getId());
         postdto.setDescription(post.getDescription());
         postdto.setTitle(post.getTitle());
+        postdto.setMediaUrl(post.getMediaUrl());
+        postdto.setMediaType(post.getMediaType());
         return  postdto;
 
     }
@@ -103,6 +107,8 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postDTO.getTitle());
         post.setContent(postDTO.getContent());
         post.setDescription(postDTO.getDescription());
+        post.setMediaUrl(postDTO.getMediaUrl());
+        post.setMediaType(postDTO.getMediaType());
           return post;
     }
 }

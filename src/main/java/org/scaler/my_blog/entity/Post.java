@@ -26,6 +26,13 @@ public class Post {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "media_url")
+    private String mediaUrl;
+
+    @Column(name = "media_type")
+    private String mediaType;
+
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Comments> comments = new HashSet<>();
 
